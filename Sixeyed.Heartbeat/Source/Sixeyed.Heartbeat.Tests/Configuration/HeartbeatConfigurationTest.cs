@@ -4,7 +4,7 @@ using Sixeyed.Heartbeat.Configuration;
 namespace Sixeyed.Heartbeat.Tests
 {
     /// <summary>
-    /// Summary description for UnitTest1
+    /// Summary description for HeartbeatConfigurationTest
     /// </summary>
     [TestClass]
     public class HeartbeatConfigurationTest

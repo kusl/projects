@@ -10,7 +10,7 @@ using hb = Sixeyed.Heartbeat;
 namespace Sixeyed.Heartbeat.Tests
 {
     /// <summary>
-    /// Summary description for UnitTest1
+    /// Summary description for HeartbeatTest
     /// </summary>
     [TestClass]
     public class HeartbeatTest

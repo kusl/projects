@@ -6,7 +6,7 @@ using Sixeyed.Heartbeat.Logging;
 namespace Sixeyed.Heartbeat.Tests
 {
     /// <summary>
-    /// Summary description for UnitTest1
+    /// Summary description for LogTest
     /// </summary>
     [TestClass]
     public class LogTest

@@ -5,7 +5,7 @@ using Sixeyed.Heartbeat.Entities.Enums;
 namespace Sixeyed.Heartbeat.Tests
 {
     /// <summary>
-    /// Summary description for UnitTest1
+    /// Summary description for HeartbeatLogTest
     /// </summary>
     [TestClass]
     public class HeartbeatLogTest
