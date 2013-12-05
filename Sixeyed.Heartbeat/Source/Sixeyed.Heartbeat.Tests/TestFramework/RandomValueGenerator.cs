@@ -4,7 +4,7 @@ namespace Sixeyed.Heartbeat.TestFramework
 {
     public static class RandomValueGenerator
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
 
         /// <summary>
         /// Returns a random boolean value

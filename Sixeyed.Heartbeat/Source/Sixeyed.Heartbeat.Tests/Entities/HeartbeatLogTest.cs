@@ -13,8 +13,7 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void Status()
         {
-            var log = new HeartbeatLog();
-            log.StatusCode = "START";
+            var log = new HeartbeatLog {StatusCode = "START"};
             Assert.AreEqual(HeartbeatStatus.Started, log.Status);
             log.Status = HeartbeatStatus.InProgress;
             Assert.AreEqual("WORKING", log.StatusCode);

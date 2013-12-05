@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Sixeyed.Heartbeat.Tests.Scenarios.Stubs
 {
-    public class StubService
+    public static class StubService
     {
-        public void RunProcess()
+        public static void RunProcess()
         {
             using (var component = new StubComponent())
             {

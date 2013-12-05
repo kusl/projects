@@ -12,8 +12,7 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void DisposedHearbeat()
         {
-            var service = new StubService();
-            service.RunProcess();
+            StubService.RunProcess();
         }
     }
 }

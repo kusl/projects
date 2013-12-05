@@ -13,9 +13,9 @@ namespace Sixeyed.Heartbeat.Tests.Scenarios.Stubs
 
         public void Process()
         {
-            long countInterval = 7000;
+            const long countInterval = 7000;
             long countTo = RandomValueGenerator.GetRandomInt(20000, 50000);
-            double timerInterval = 300; //0.3 seconds
+            const double timerInterval = 300; //0.3 seconds
             _heartbeat = new Heartbeat(this, countInterval, timerInterval);
             _heartbeat.Start("StubComponent.Process started, countInterval: {0}, countTo: {1}, timerInterval: {2}"
                                 .FormatWith(countInterval, countTo, timerInterval));
@@ -29,7 +29,7 @@ namespace Sixeyed.Heartbeat.Tests.Scenarios.Stubs
             }
         }
 
-        private void DoWork(Heartbeat heartbeat, long taskIndex, long finalTaskIndex)
+        private static void DoWork(Heartbeat heartbeat, long taskIndex, long finalTaskIndex)
         {
             if (heartbeat == null)
                 Trace.WriteLine("Heartbeat is null");

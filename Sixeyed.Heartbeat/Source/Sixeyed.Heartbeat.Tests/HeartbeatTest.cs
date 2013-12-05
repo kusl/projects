@@ -43,15 +43,14 @@ namespace Sixeyed.Heartbeat.Tests
         [ExpectedException(typeof(ArgumentException), "InitiatingObject must be set\r\nParameter name: InitiatingObject")]
         public void Start_InvalidState_NoInitiatingObject()
         {
-            var heartbeat = new hb.Heartbeat();
-            heartbeat.PulseCountInterval = 10;
+            var heartbeat = new hb.Heartbeat { PulseCountInterval = 10 };
             heartbeat.Start();
         }
 
         [TestMethod]
         public void RunTimer_NoHandler()
         {
-            double timerInterval = 3 * 1000; //3 seconds
+            const double timerInterval = 3 * 1000; //3 seconds
             var runTime = RandomValueGenerator.GetRandomInt(3 * 1000, 10 * 1000);
             var heartbeat = new hb.Heartbeat(this, 0, timerInterval);
             heartbeat.Start("RunTimer_NoHandler started, timerInterval: {0}, runTime: {1}".FormatWith(timerInterval, runTime));
@@ -62,29 +61,29 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void RunTimer()
         {
-            double timerInterval = 3 * 1000; //3 seconds
+            const double timerInterval = 3 * 1000; //3 seconds
             var runTime = RandomValueGenerator.GetRandomInt(3 * 1000, 10 * 1000);
             var heartbeat = new hb.Heartbeat(this, 0, timerInterval);
-    heartbeat.OnPulse += new Heartbeat.OnPulseEventHanlder(RunTimer_OnPulse);
-    heartbeat.Start("RunTimer started, timerInterval: {0}, runTime: {1}".FormatWith(timerInterval, runTime));
+            heartbeat.OnPulse += new Heartbeat.OnPulseEventHanlder(RunTimer_OnPulse);
+            heartbeat.Start("RunTimer started, timerInterval: {0}, runTime: {1}".FormatWith(timerInterval, runTime));
             Thread.Sleep(runTime);
             heartbeat.SetComplete("RunTimer finished");
         }
 
-    void RunTimer_OnPulse(PulseEventSource source, ref bool writeLog, ref string logText)
-    {
-        writeLog = true;
-        logText = "RunTimer_OnPulse, source: {0}, text: {1}"
-                    .FormatWith(source, RandomValueGenerator.GetRandomString());
-    }
+        void RunTimer_OnPulse(PulseEventSource source, ref bool writeLog, ref string logText)
+        {
+            writeLog = true;
+            logText = "RunTimer_OnPulse, source: {0}, text: {1}"
+                        .FormatWith(source, RandomValueGenerator.GetRandomString());
+        }
 
         [TestMethod]
         public void RunCount_NoHandler()
         {
-            long countInterval = 5000;
+            const long countInterval = 5000;
             long countTo = RandomValueGenerator.GetRandomInt(1000, 50000);
             var heartbeat = new hb.Heartbeat(this, countInterval, 0);
-    heartbeat.Start("RunCount_NoHandler, countInterval: {0}, countTo: {1}".FormatWith(countInterval, countTo));
+            heartbeat.Start("RunCount_NoHandler, countInterval: {0}, countTo: {1}".FormatWith(countInterval, countTo));
             for (int i = 0; i < countTo; i++)
             {
                 heartbeat.IncrementCount();
@@ -95,30 +94,30 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void RunCount_Failure()
         {
-            long countInterval = 5000;
+            const long countInterval = 5000;
             long countTo = RandomValueGenerator.GetRandomInt(1000, 50000);
-    var heartbeat = new hb.Heartbeat(this, countInterval, 0);
-    heartbeat.Start("RunCount_NoHandler, countInterval: {0}, countTo: {1}".FormatWith(countInterval, countTo));
-    try
-    {
-        for (int i = 0; i < countTo; i++)
-        {
-            heartbeat.IncrementCount();
-        }
-        var zero = 0;
-        var dbz = 1 / zero;
-        heartbeat.SetComplete("RunCount_NoHandler finished");
-    }
-    catch (Exception ex)
-    {
-        heartbeat.SetFailed("RunCount_NoHandler failed, message: {0}".FormatWith(ex.FullMessage()));
-    }
+            var heartbeat = new hb.Heartbeat(this, countInterval, 0);
+            heartbeat.Start("RunCount_NoHandler, countInterval: {0}, countTo: {1}".FormatWith(countInterval, countTo));
+            try
+            {
+                for (int i = 0; i < countTo; i++)
+                {
+                    heartbeat.IncrementCount();
+                }
+                var zero = 0;
+                var dbz = 1 / zero;
+                heartbeat.SetComplete("RunCount_NoHandler finished");
+            }
+            catch (Exception ex)
+            {
+                heartbeat.SetFailed("RunCount_NoHandler failed, message: {0}".FormatWith(ex.FullMessage()));
+            }
         }
 
         [TestMethod]
         public void RunCount()
         {
-            long countInterval = 5000;
+            const long countInterval = 5000;
             long countTo = RandomValueGenerator.GetRandomInt(1000, 50000);
             using (var heartbeat = new hb.Heartbeat(this, countInterval, 0))
             {
@@ -135,7 +134,7 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void RunCount_NoCompletion()
         {
-            long countInterval = 5000;
+            const long countInterval = 5000;
             long countTo = RandomValueGenerator.GetRandomInt(1000, 50000);
             using (var heartbeat = new hb.Heartbeat(this, countInterval, 0))
             {
@@ -157,9 +156,9 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void RunCountAndTimer_NoHandler()
         {
-            long countInterval = 1000;
+            const long countInterval = 1000;
             long countTo = RandomValueGenerator.GetRandomInt(1000, 10000);
-            double timerInterval = 800; //0.8 seconds
+            const double timerInterval = 800; //0.8 seconds
             var runTime = RandomValueGenerator.GetRandomInt(3 * 1000, 10 * 1000);
             var heartbeat = new hb.Heartbeat(this, countInterval, timerInterval);
             heartbeat.Start("RunCountAndTimer_NoHandler, countInterval: {0}, countTo: {1}, timerInterval: {2}, runTime: {3}"
@@ -180,9 +179,9 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void RunCountAndTimer_NoHandler_ThreadPool()
         {
-            long countInterval = 7000;
+            const long countInterval = 7000;
             long countTo = RandomValueGenerator.GetRandomInt(10000, 30000);
-            double timerInterval = 300; //0.3 seconds
+            const double timerInterval = 300; //0.3 seconds
             var runTime = RandomValueGenerator.GetRandomInt(3 * 1000, 10 * 1000);
             _heartbeat = new hb.Heartbeat(this, countInterval, timerInterval);
             _heartbeat.Start("RunCountAndTimer_NoHandler_ThreadPool, countInterval: {0}, countTo: {1}, timerInterval: {2}, runTime: {3}"
@@ -197,21 +196,21 @@ namespace Sixeyed.Heartbeat.Tests
         [TestMethod]
         public void RunCountAndTimer_NoHandler_MultiThreaded()
         {
-            long countInterval = 7000;
+            const long countInterval = 7000;
             long countTo = RandomValueGenerator.GetRandomInt(10000, 30000);
-            double timerInterval = 300; //0.3 seconds
+            const double timerInterval = 300; //0.3 seconds
             var runTime = RandomValueGenerator.GetRandomInt(3 * 1000, 10 * 1000);
             _heartbeat = new hb.Heartbeat(this, countInterval, timerInterval);
             _heartbeat.Start("RunCountAndTimer_NoHandler_MultiThreaded, countInterval: {0}, countTo: {1}, timerInterval: {2}, runTime: {3}"
                                 .FormatWith(countInterval, countTo, timerInterval, runTime));
-            List<Thread> threads = new List<Thread>();
+            var threads = new List<Thread>();
             for (int i = 0; i < countTo; i++)
             {
-                Thread thread = new Thread(Increment);
+                var thread = new Thread(Increment);
                 thread.Start();
             }
             // Wait for the threads.
-            foreach (Thread thread in threads)
+            foreach (var thread in threads)
             {
                 thread.Join();
             }
@@ -233,8 +232,8 @@ namespace Sixeyed.Heartbeat.Tests
         {
 
             long countTo = RandomValueGenerator.GetRandomInt(20000, 50000);
-            long countInterval = 7000;
-            double timerInterval = 300; //0.3 seconds
+            const long countInterval = 7000;
+            const double timerInterval = 300; //0.3 seconds
             var heartbeat = new Heartbeat(this, countInterval, timerInterval);
             heartbeat.Start("RunCountAndTimer_NoHandler_WithTasks, countInterval: {0}, countTo: {1}, timerInterval: {2}"
                                 .FormatWith(countInterval, countTo, timerInterval));
@@ -257,7 +256,7 @@ namespace Sixeyed.Heartbeat.Tests
             if (RandomValueGenerator.GetRandomBool())
             {
                 Thread.Sleep(RandomValueGenerator.GetRandomInt(2));
-            }            
+            }
             if (taskIndex == finalTaskIndex)
             {
                 heartbeat.SetComplete("RunCountAndTimer_NoHandler_WithTasks finished");
